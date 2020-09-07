@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
     <Folder Include="Enums\" />
     <Folder Include="Exception\" />
     <Folder Include="ValueObjects\" />
