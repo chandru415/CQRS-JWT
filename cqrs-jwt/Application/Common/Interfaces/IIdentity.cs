@@ -5,6 +5,7 @@ namespace Application.Common.Interfaces
 {
     public interface IIdentity
     {
-        Task<User> FindUserByIdAsync();
+        Task<User> FindUserByIdAsync(string userId);
+        Task<bool> CreateUserAsync(User user);
     }
 }

@@ -34,6 +34,8 @@ namespace API
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseSwagger();
 
             app.UseCors("MyAllowSpecificOrigins");

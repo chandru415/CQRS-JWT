@@ -9,6 +9,8 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddTransient<IDateTime, DateTimeService>();
+            services.AddTransient<IIdentity, IdentityService>();
+            services.AddTransient<IDbContext, DbContextService>();
             return services;
         }
     }
