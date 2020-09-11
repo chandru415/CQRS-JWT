@@ -24,9 +24,27 @@ namespace Application.Services
             _jwtSettings = jwtSettings;
         }
 
-        public Task<AuthenticationResponse> LoginAsync(LoginCommand user)
+        public async Task<AuthenticationResponse> LoginAsync(LoginCommand user)
         {
-            throw new System.NotImplementedException();
+            var existingUser = await _identity.FindUserByIdAsync(user.UserId);
+
+            if (existingUser == null)
+            {
+                return new AuthenticationResponse
+                {
+                    Errors = new[] { "Username / password incorrect" }
+                };
+            }
+
+            if (CheckPasswordAsync(existingUser.Password, existingUser.Salt, user.Password))
+            {
+                return new AuthenticationResponse
+                {
+                    Errors = new[] { "Username / password incorrect" }
+                };
+            }
+
+            return await GenerateAuthenticationResponseForUserAsync(existingUser);
         }
 
         public async Task<AuthenticationResponse> RegisterAsync(CreateUserCommand user)
@@ -59,9 +77,9 @@ namespace Application.Services
             return await GenerateAuthenticationResponseForUserAsync(newUser);
         }
 
-        private bool CheckPasswordAsync(string password, string salt)
+        private bool CheckPasswordAsync(string hashPassword, string salt, string password)
         {
-            throw new System.NotImplementedException();
+            return HashVerify.VerifyHashString(hashPassword, salt, password);
         }
 
         private Task<AuthenticationResponse> GenerateAuthenticationResponseForUserAsync(User user)

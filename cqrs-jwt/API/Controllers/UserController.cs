@@ -1,4 +1,5 @@
 ﻿using Application.Commands;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -9,11 +10,20 @@ namespace API.Controllers
     public class UserController : ApiController
     {
         [HttpPost("createuser")]
+        [Authorize]
         public async Task<IActionResult>
-          UpdateSocialDetails([FromBody] CreateUserCommand createUser)
+          CreateuserAsync([FromBody] CreateUserCommand createUser)
         {
             var result = await Mediator.Send(createUser);
             return result != null ? Created("",  result) : (IActionResult)BadRequest(result);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult>
+         LoginAsync([FromBody] LoginCommand login)
+        {
+            var result = await Mediator.Send(login);
+            return result != null ? Created("", result) : (IActionResult)BadRequest(result);
         }
     }
 }
