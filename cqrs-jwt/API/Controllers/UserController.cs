@@ -1,4 +1,5 @@
 ﻿using Application.Commands;
+using Application.Handlers.QHandlers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace API.Controllers
           CreateuserAsync([FromBody] CreateUserCommand createUser)
         {
             var result = await Mediator.Send(createUser);
-            return result != null ? Created("",  result) : (IActionResult)BadRequest(result);
+            return result != null ? Created("", result) : (IActionResult)BadRequest(result);
         }
 
         [HttpPost("login")]
@@ -24,6 +25,15 @@ namespace API.Controllers
         {
             var result = await Mediator.Send(login);
             return result != null ? Created("", result) : (IActionResult)BadRequest(result);
+        }
+
+
+        [HttpGet("getuser/{userid}")]
+        public async Task<IActionResult>
+         FindUserByIdAsync([FromRoute] string userid)
+        {
+            var result = await Mediator.Send(new UserInfoQuery { UserId = userid });
+            return result != null ? Ok(result) : (IActionResult)NotFound();
         }
     }
 }
