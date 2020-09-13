@@ -29,6 +29,7 @@ namespace API.Controllers
 
 
         [HttpGet("getuser/{userid}")]
+        [Authorize]
         public async Task<IActionResult>
          FindUserByIdAsync([FromRoute] string userid)
         {
