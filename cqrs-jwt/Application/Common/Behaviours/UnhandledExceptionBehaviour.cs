@@ -24,7 +24,7 @@ namespace Application.Common.Behaviours
             {
                 var requestName = typeof(TRequest).Name;
 
-                _logger.LogError(ex, "Rectitude Portal Profile Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
+                _logger.LogError(ex, "API Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
 
                 throw;
             }
