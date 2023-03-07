@@ -36,7 +36,7 @@ namespace Application.Services
                 };
             }
 
-            if (CheckPasswordAsync(existingUser.Password, existingUser.Salt, user.Password))
+            if (!CheckPasswordAsync(existingUser.Password, existingUser.Salt, user.Password))
             {
                 return new AuthenticationResponse
                 {
